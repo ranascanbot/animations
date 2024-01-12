@@ -1,2 +1,2 @@
-# animations
+# Animations
 Kodeco animations course code.
