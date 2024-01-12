@@ -1,0 +1,5 @@
+.DS_Store
+
+*xcworkspace/xcuserdata/*
+*.xcuserstate
+*/xcschemes/xcschememanagement.plist
