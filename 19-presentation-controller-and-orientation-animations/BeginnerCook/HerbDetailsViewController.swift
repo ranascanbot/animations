@@ -58,7 +58,8 @@ class HerbDetailsViewController: UIViewController, UIViewControllerTransitioning
     bgImage.image = UIImage(named: herb.image)
     titleView.text = herb.name
     descriptionView.text = herb.description
-
+    containerView.tag = 1
+    
     view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionClose(_:))))
   }
 
