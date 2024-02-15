@@ -17,14 +17,20 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
   var dismissCompletion: (() -> Void)?
   
   func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    print("Presenting/Dismissing Scenario: Called 2nd")
     return duration
   }
   
   func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
     
+    print("Presenting/Dismissing Scenario: Called 3rd")
     let containerView = transitionContext.containerView
     let herbView = presenting ? transitionContext.view(forKey: .to) : transitionContext.view(forKey: .from)
-    guard let herbView = herbView else {
+    
+    let herbViewController = presenting ? transitionContext.viewController(forKey: .to) :
+                                          transitionContext.viewController(forKey: .from)
+    
+    guard let herbView = herbView, let herbViewController = herbViewController as? HerbDetailsViewController else {
       transitionContext.completeTransition(false)
       return
     }
@@ -44,6 +50,7 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
       herbView.center = CGPoint(x: initialFrame.midX, y: initialFrame.midY)
       herbView.clipsToBounds = true
       herbView.layer.cornerRadius = 20.0 / xScaleFactor
+      herbViewController.containerView.alpha = 0.0
     }
     
     if let toView = transitionContext.view(forKey: .to) {
@@ -62,6 +69,7 @@ class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
       CGAffineTransform.identity : scaleTransform
       herbView.center = CGPoint(x: finalFrame.midX, y: finalFrame.midY)
       herbView.layer.cornerRadius = self.presenting ? 0.0 : 20 / xScaleFactor
+      herbViewController.containerView.alpha = self.presenting ? 1.0 : 0.0
       
     }, completion: { _ in
       if !self.presenting { self.dismissCompletion?() }

@@ -151,6 +151,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
   func animationController(forPresented presented: UIViewController, 
                            presenting: UIViewController,
                            source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    print("Presenting Scenario: Called 1st")
     guard let selectedImage else { return nil }
     
     // Set the origin frame on the transition animator
@@ -163,7 +164,7 @@ extension ViewController: UIViewControllerTransitioningDelegate {
   }
   
   func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-    
+    print("Dismissing Scenario: Called 1st")
     // Set the properties on transition animator for dismissing scenario so it calculates everything accordingly
     transition.presenting = false
     return transition
