@@ -10,7 +10,7 @@ import UIKit
 
 class RevealAnimator: NSObject, UIViewControllerAnimatedTransitioning {
   
-  let animationDuration = 2.0
+  let animationDuration = 0.7
   var operation: UINavigationController.Operation = .push
   
   weak var storedContext: UIViewControllerContextTransitioning?
@@ -25,9 +25,13 @@ class RevealAnimator: NSObject, UIViewControllerAnimatedTransitioning {
       
       let fromVC = transitionContext.viewController(forKey: .from) as! DetailViewController
       let toVC = transitionContext.viewController(forKey: .to) as! MainViewController
-      transitionContext.containerView.addSubview(toVC.view)
+      
+      transitionContext.containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
       toVC.view.frame = transitionContext.finalFrame(for: toVC)
-      transitionContext.completeTransition(true)
+      
+      UIView.animate(withDuration: animationDuration - 0.2, animations: {
+        fromVC.view.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+      }, completion: { transitionContext.completeTransition($0) })
       
       return
     }
