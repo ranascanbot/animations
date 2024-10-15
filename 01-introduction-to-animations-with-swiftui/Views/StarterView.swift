@@ -34,22 +34,24 @@ import SwiftUI
 
 struct StarterView: View {
   
+  @State var scale = 0.4
   @State var currentOffset = 0
   @State var color = Color.green
 
   var body: some View {
     ZStack {
       Circle()
-        .scaleEffect(0.5)
         .offset(x: offsets[currentOffset].x,
                 y: offsets[currentOffset].y)
+        .scaleEffect(scale)
+        .animation(.easeOut(duration: 0.2), value: scale)
         .foregroundColor(colors[currentOffset])
-        .animation(.default, value: currentOffset)
+        .animation(.easeIn(duration: 0.2), value: currentOffset)
     }
     .onAppear {
-      for i in 0..<offsets.count {
-        delay(seconds: Double(i)) {
-          currentOffset = i
+      for index in 1..<offsets.count {
+        delay(seconds: Double(index)) {
+          self.currentOffset = index
         }
       }
     }
